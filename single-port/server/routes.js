@@ -1,6 +1,7 @@
 'use strict'
 
 import { Router } from 'express'
+// import store from '../store'
 
 const router = Router()
 
@@ -10,6 +11,9 @@ const users = [
   { name: 'Pooya' },
   { name: 'Sébastien' },
 ]
+
+// const works = this.$store.state.works
+const works = []
 
 export default () => {
 
@@ -40,6 +44,30 @@ export default () => {
       next(err)
     }
   })
+
+    // Get all works.
+    router.get('/works', (req, res, next) => {
+      res.body = works
+      next()
+    })
+
+    // Add a work.
+    router.get('/addwork', (req, res, next) => {
+      next()
+    })
+  
+    // Get the work by id.
+    router.get('/works/:id', (req, res, next) => {
+      const id = parseInt(req.params.id)
+      if (id >= 0 && id < works.length) {
+        res.body = works[id]
+        next()
+      } else {
+        var err = new Error('Work Not Found')
+        err.status = 400
+        next(err)
+      }
+    })
 
   // Handle routes not found.
   // https://stackoverflow.com/questions/38681318/express-4-middleware-when-route-is-not-found-finalhandler-not-called-how-to-c

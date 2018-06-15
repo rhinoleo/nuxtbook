@@ -16,6 +16,20 @@ module.exports = {
   env: {
     HOST_URL: process.env.HOST_URL || 'http://127.0.0.1:3000'
   },
+  modules: [
+    '@nuxtjs/axios',
+  ],
+  axios: {
+    // proxyHeaders: false
+  },
+  generate: {
+    dir: 'docs',
+    routes: [
+      '/works/brut',
+      '/works/nostopnocity',
+      '/works/pompeii2',
+    ]
+  },
   /*
   ** Global CSS
   */
