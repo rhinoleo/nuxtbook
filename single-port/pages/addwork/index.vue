@@ -5,35 +5,47 @@
     </h1>
     <div class="form-container">
       <div class="form-group">
-          <label>titre</label></br>
+          <input type="radio" id="design" value="design" v-model="work.type">
+          <label>design</label>
+          <input type="radio" id="insitu" value="insitu" v-model="work.type">
+          <label>insitu</label>
+          <input type="radio" id="autre" value="autre" v-model="work.type">
+          <label>autre</label>
+      </div>
+      <div class="form-group">
+          <label>titre</label><br>
           <input type="text"  v-model="work.label">
       </div>
       <div class="form-group">
-          <label>accroche</label></br>
+          <label>accroche</label><br>
           <input type="text"  v-model="work.summary">
       </div>
       <div class="form-group">
-          <label>texte</label></br>
+          <label>texte</label><br>
           <textarea rows=10 cols=40 v-model="work.text"></textarea>
       </div>
       <div class="form-group">
-          <label>année</label></br>
+          <label>année</label><br>
           <input type="text"  v-model="work.date">
       </div>
       <div class="form-group">
-          <label>description</label></br>
+          <label>description</label><br>
           <input type="text"  v-model="work.description">
+      </div>
+      <div class="form-group">
+          <label>image</label><br>
+          <input type="text"  v-model="work.picture">
       </div>
       <button class="btn btn-primary" @click="submit">Submit</button>
     </div>
-    <hr>
+    <!-- <hr>
     <input type="file" @change="onFileChanged">
     <button @click="onUpload">Upload!</button>
     <hr>
     <button class="btn btn-primary" @click="getData">Get Data</button>
     <ul class="list-group">
       <li class="list-group-item" v-for="(work, id) in works" :key="id">{{ work.label }} - {{ work.abstract }}</li>
-    </ul>
+    </ul> -->
   </section>
 </template>
 
@@ -49,10 +61,12 @@ export default {
     return {
       work: {
           label:'',
+          type:'',
           summary:'',
           text:'',
           date:'',
-          description:''
+          description:'',
+          picture:''
       },
       works: [],
       selectedFile: null

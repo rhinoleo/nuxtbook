@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
-    <h1 class="title">BOOK</h1>
-    <!-- Make sure to add the <nuxt/> component when creating a layout to display the page component. -->
-    <!-- https://nuxtjs.org/guide/views#layouts -->
-    <nuxt/>
-    <!-- <my-footer/> -->
-  </div>
+    <div class="container">
+      <h1 class="title">BOOK</h1>
+      <!-- Make sure to add the <nuxt/> component when creating a layout to display the page component. -->
+      <!-- https://nuxtjs.org/guide/views#layouts -->
+      <nuxt/>
+      <!-- <my-footer/> -->
+    </div>
 </template>
 
 <script>

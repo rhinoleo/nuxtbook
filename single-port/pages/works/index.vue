@@ -1,14 +1,27 @@
 <template>
+<v-app>
   <section class="container">
     <h1 class="title part">
       travaux
     </h1>
     <div class="works-container">
+      <md-button class="md-raised" @click="filterDesign()">design de rue</md-button>
+      <md-button class="md-raised" @click="filterInsitu()">interventions in situ</md-button>
+      <md-button class="md-raised" @click="filterAutre()">autres pratiques</md-button>
       <ul class="works">
-        <li v-for="(work, index) in works" :key="index" class="work">
-          <nuxt-link class="work-label" :to="'works/' + index">
+        <li v-for="(work, index) in orderedWorks" :key="index" class="work">
+          <!-- <nuxt-link v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
             {{ work.label }}
-          </nuxt-link>
+          </nuxt-link> -->
+          <div v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
+            {{ work.label }}
+          </div>
+          <div v-if="work.type == 'design'" class="work-label work-type-design" :to="'works/' + index">
+            {{ work.label }}
+          </div>
+          <div v-if="work.type == 'insitu'" class="work-label work-type-insitu" :to="'works/' + index">
+            {{ work.label }}
+          </div>
           <div class="work-date">{{ work.date }}</div>
           <div class="work-summary">{{ work.summary }}</div>
           <img class="work-picture" :src="work.picture" alt="">
@@ -18,10 +31,12 @@
       </ul>
     </div>
   </section>
+</v-app>
 </template>
 
 <script>
 import axios from '~/plugins/axios'
+import _ from 'lodash'
 
 export default {
   // async asyncData () {
@@ -37,6 +52,25 @@ export default {
   head () {
     return {
       title: 'Works'
+    }
+  },
+  computed: {
+    orderedWorks() {
+      return _.orderBy(this.works, ['date','label'], ['desc', 'asc'])
+    }
+  },
+  methods: {
+    filterDesign() {
+      console.log(this.orderedWorks)
+      return _.filter(this.orderedWorks, { 'type': 'design' })
+    },
+    filterInsitu() {
+      return _.filter(this.orderedWorks, { 'type': 'insitu' })
+    },
+    filterAutre() {
+      console.log(this.works)
+      console.log(_.filter(this.works, { 'type': 'autre' }))
+      return _.filter(this.works, { 'type': 'autre' })
     }
   },
   created() {
@@ -87,6 +121,15 @@ export default {
 }
 .work-text {
   margin: 1em 0;
+}
+.work-type-autre {
+  color: #CC0000;
+}
+.work-type-design {
+  color: #FF9900;
+}
+.work-type-insitu {
+  color: #999900;
 }
 
 </style>
