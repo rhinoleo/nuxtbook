@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <img src="~/assets/img/logo.png" alt="Nuxt.js Logo" class="logo" />
+    <h1 class="title">BOOK</h1>
     <!-- Make sure to add the <nuxt/> component when creating a layout to display the page component. -->
     <!-- https://nuxtjs.org/guide/views#layouts -->
     <nuxt/>
-    <my-footer/>
+    <!-- <my-footer/> -->
   </div>
 </template>
 
@@ -52,4 +52,5 @@ export default {
   font-size: 2.5em;
   margin: 0;
 }
+
 </style>

@@ -4,12 +4,15 @@ import express from 'express'
 import { Nuxt, Builder } from 'nuxt'
 import config from './config'
 import middlewares from './middlewares'
+import cors from 'cors'
 
 const app = express()
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 3000
 
 app.set('port', port)
+
+app.use(cors())
 
 // Middlewares are imported here.
 middlewares(app)

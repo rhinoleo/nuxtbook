@@ -1,21 +1,31 @@
 <template>
   <section class="container">
-    <h1 class="title">
-      ADDWORK
+    <h1 class="title part">
+      ajouter un projet
     </h1>
-    <div class="form-group">
-        <label>work label</label>
-        <input type="text"  v-model="work.label">
+    <div class="form-container">
+      <div class="form-group">
+          <label>titre</label></br>
+          <input type="text"  v-model="work.label">
+      </div>
+      <div class="form-group">
+          <label>accroche</label></br>
+          <input type="text"  v-model="work.summary">
+      </div>
+      <div class="form-group">
+          <label>texte</label></br>
+          <textarea rows=10 cols=40 v-model="work.text"></textarea>
+      </div>
+      <div class="form-group">
+          <label>année</label></br>
+          <input type="text"  v-model="work.date">
+      </div>
+      <div class="form-group">
+          <label>description</label></br>
+          <input type="text"  v-model="work.description">
+      </div>
+      <button class="btn btn-primary" @click="submit">Submit</button>
     </div>
-    <div class="form-group">
-        <label>work abstract</label>
-        <input type="text"  v-model="work.abstract">
-    </div>
-    <div class="form-group">
-        <label>work picture</label>
-        <input type="text"  v-model="work.picture">
-    </div>
-    <button class="btn btn-primary" @click="submit">Submit</button>
     <hr>
     <input type="file" @change="onFileChanged">
     <button @click="onUpload">Upload!</button>
@@ -39,7 +49,10 @@ export default {
     return {
       work: {
           label:'',
-          abstract:''
+          summary:'',
+          text:'',
+          date:'',
+          description:''
       },
       works: [],
       selectedFile: null
@@ -58,6 +71,7 @@ export default {
           }, error => {
             console.log(error);
           });
+          this.work = '';
       },
       getData() {
         axios.get('https://book-73f3b.firebaseio.com/data.json')
@@ -76,7 +90,7 @@ export default {
 </script>
 
 <style scoped>
-.title
+.part
 {
   margin: 30px 0;
 }
@@ -89,5 +103,18 @@ export default {
 .user
 {
   margin: 10px 0;
+}
+.form-container
+{
+  margin: auto;
+  width: 50%;
+}
+.form-group
+{
+  margin: 10px 0;
+  text-align: left;
+}
+label {
+  margin-right: 10px;
 }
 </style>

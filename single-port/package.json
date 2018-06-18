@@ -21,6 +21,6 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
-    "backpack-core": "^0.4.1"
+    "backpack-core": "^0.4.3"
   }
 }

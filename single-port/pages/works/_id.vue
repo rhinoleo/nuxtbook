@@ -1,11 +1,10 @@
 <template>
   <section class="container">
-    <h1 class="title">
-      Work
+    <h1 class="title part">
+      work
     </h1>
     <h2 class="info">
-      ho
-      <!-- {{ work.label }} -->
+      {{ work.label }}
     </h2>
     <!-- <ul>
       <li v-for="(index) in this.img" :key="index">
@@ -19,19 +18,19 @@
 </template>
 
 <script>
-// import axios from '~/plugins/axios'
+import axios from '~/plugins/axios'
 
 export default {
   name: 'id',
-  // asyncData ({ params, error }) {
-  //   return axios.get('/api/works/' + params.id)
-  //     .then((res) => {
-  //       return { work: res.data.data }
-  //     })
-  //     .catch((e) => {
-  //       error({ statusCode: 404, message: 'Work not found' })
-  //     })
-  // },
+  asyncData ({ params, error }) {
+    return axios.get('https://book-73f3b.firebaseio.com/data/' + params.id)
+      .then((res) => {
+        return { work: res.data.data }
+      })
+      .catch((e) => {
+        error({ statusCode: 404, message: 'Work not found' })
+      })
+  },
 
   // async asyncData({$axios, params}) {
   //   const {data: {match}} = await $axios.get(`https://www.rolandgarros.com/api/en-us/matches/${params.match}`);
@@ -40,7 +39,7 @@ export default {
 
   data () {
     return {
-      works: this.$store.state.works
+      work: []
     }
   },
   head () {
@@ -48,12 +47,18 @@ export default {
     return {
       // title: `Work: ${this.work.label}`
     }
-  }
+  },
+  // created() {
+  //       axios.get('https://book-73f3b.firebaseio.com/data.json' + params.id)
+  //       .then(response => {
+  //         this.work = response.data;
+  //       })
+  // }
 }
 </script>
 
 <style scoped>
-.title
+.part
 {
   margin-top: 30px;
 }
