@@ -16,14 +16,16 @@
     "cors": "^2.8.4",
     "cross-env": "^5.0.1",
     "express": "^4.15.3",
+    "node-sass": "^4.9.0",
     "nuxt": "^1.0.0-rc3",
     "nuxt-vue-material": "^1.1.0",
     "rethinkdb": "^2.3.3",
-    "serve-favicon": "^2.4.5"
+    "sass-loader": "^7.0.3",
+    "serve-favicon": "^2.4.5",
+    "vue-style-loader": "^4.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
-    "backpack-core": "^0.4.3",
-    "vuetify": "^1.0.19"
+    "backpack-core": "^0.4.3"
   }
 }
