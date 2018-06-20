@@ -22,15 +22,20 @@ import axios from '~/plugins/axios'
 
 export default {
   name: 'id',
-  asyncData ({ params, error }) {
-    return axios.get('https://book-73f3b.firebaseio.com/data/' + params.id)
-      .then((res) => {
-        return { work: res.data.data }
-      })
-      .catch((e) => {
-        error({ statusCode: 404, message: 'Work not found' })
-      })
-  },
+  // asyncData ({ $axios, params }) {
+  //   const {data: {work}} = await $axios.get(`https://book-73f3b.firebaseio.com/data/${params.work}`);
+  //   return work;
+  // },
+
+  // asyncData ({ params, error }) {
+  //   return axios.get('https://book-73f3b.firebaseio.com/data/' + params.id)
+  //     .then((res) => {
+  //       return { work: res.data.data }
+  //     })
+  //     .catch((e) => {
+  //       error({ statusCode: 404, message: 'Work not found' })
+  //     })
+  // },
 
   // async asyncData({$axios, params}) {
   //   const {data: {match}} = await $axios.get(`https://www.rolandgarros.com/api/en-us/matches/${params.match}`);

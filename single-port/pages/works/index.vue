@@ -1,5 +1,4 @@
 <template>
-<v-app>
   <section class="container">
     <h1 class="title part">
       travaux
@@ -12,7 +11,7 @@
         <md-button class="md-raised" @click="filterAutre()">autres pratiques</md-button>
       </div>
       <ul class="works md-layout md-gutter">
-        <li v-for="(work, index) in orderedWorks" :key="index" class="work md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+        <li v-for="(work, index) in orderedWorks" :key="index" class="work md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100" @mouseover="mouseOver()" :class="{ 'md-elevation-1': active }">
           <!-- <nuxt-link v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
             {{ work.label }}
           </nuxt-link> -->
@@ -34,7 +33,6 @@
       </ul>
     </div>
   </section>
-</v-app>
 </template>
 
 <script>
@@ -42,17 +40,19 @@ import axios from '~/plugins/axios'
 import _ from 'lodash'
 
 export default {
-  // async asyncData () {
-  //   let { data } = await axios.get('https://book-73f3b.firebaseio.com/data')
-  //   console.log('hurrah!')
-  //   return { works: data }
-  // },
+  async asyncData() {
+    console.log('init asyncData')
+    const response = await axios.get('https://book-73f3b.firebaseio.com/data.json')
+    const data = await response
+    return { works : response.data }
+  },
   data () {
     return {
       works: [],
       onlyDesign: false,
       onlyInsitu: false,
-      onlyAutre: false
+      onlyAutre: false,
+      active: false
     }
   },
   head () {
@@ -93,14 +93,17 @@ export default {
       this.onlyDesign = false
       this.onlyInsitu = false
       this.onlyAutre = false
-    }
+    },
+    // mouseOver: function(){
+    //   this.active = !this.active;   
+    // }
   },
-  created() {
-        axios.get('https://book-73f3b.firebaseio.com/data.json')
-        .then(response => {
-          this.works = response.data;
-        })
-  }
+  // created() {
+  //       axios.get('https://book-73f3b.firebaseio.com/data.json')
+  //       .then(response => {
+  //         this.works = response.data;
+  //       })
+  // }
 }
 </script>
 
