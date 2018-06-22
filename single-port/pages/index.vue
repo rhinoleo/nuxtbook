@@ -9,11 +9,11 @@
 import axios from '~/plugins/axios'
 
 export default {
-  async asyncData () {
-    let {data} = await axios.get('/api')
-    console.log(data.data)
-    return data.data
-  },
+  // async asyncData () {
+  //   let {data} = await axios.get('/api')
+  //   console.log(data.data)
+  //   return data.data
+  // },
   head () {
     return {
       title: 'Nuxt + Express'

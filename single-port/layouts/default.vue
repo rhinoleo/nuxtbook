@@ -4,16 +4,22 @@
       <!-- Make sure to add the <nuxt/> component when creating a layout to display the page component. -->
       <!-- https://nuxtjs.org/guide/views#layouts -->
       <nuxt/>
-      <!-- <my-footer/> -->
+      <!-- <bio/>
+      <contact/>
+      <footer/> -->
     </div>
 </template>
 
 <script>
-import MyFooter from '~/components/footer.vue'
+// import Footer from '~/components/footer.vue'
+// import Bio from '~/components/bio.vue'
+// import Contact from '~/components/contact.vue'
+import store from '~/store'
 
 export default {
+  store,
   components: {
-    MyFooter
+    // bio: Bio, contact: Contact, footer: Footer
   }
 }
 </script>
