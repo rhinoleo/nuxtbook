@@ -12,23 +12,27 @@ const store = () => {
       increment (state) {
         state.counter++
       },
-      setWorks (state, data) {
+      setWorks: (state, { data }) => {
         state.works = data
         console.log('Works set')
-        console.log('state.works : ' + state.works['-LFFA0OCQkwrgPklDLFl'].date)
       }
     },
     actions: {
-      async nuxtServerInit ({commit}) {
+      async nuxtServerInit ({ commit }) {
         console.log('[INIT]')
-        return axios.get(`https://book-73f3b.firebaseio.com/data.json`)
-          .then((response) => {
+        await axios.get(`https://book-73f3b.firebaseio.com/data.json`).then((response) => {
             console.log('Got a response from axios')
-            const {data} = response
-            commit('setWorks', data)
+            commit('setWorks', { data: response.data })
+          }, (err) => {
+            console.log(err)
           })
       }
 
+    },
+    getters: {
+      works(state) {
+        return state.works
+      }
     }
   })
 }

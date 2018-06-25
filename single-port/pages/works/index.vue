@@ -4,17 +4,6 @@
       travaux
     </h1>
     <div class="works-container">
-      <p>{{ $store.state.counter }}</p>
-      <button @click="$store.commit('increment')">{{ $store.state.counter }}</button>
-      <p>{{ $store.state.works }}</p>
-      <!-- <p>{{ $store.state.works['-LFFA0OCQkwrgPklDLFl'].date }}</p> -->
-      <!-- <p>{{ work1 }}</p> -->
-      <ul>
-        <li v-for="(work, index) in orderedWorks" :key="index">
-          label : {{ work.label }}
-        </li>
-      </ul>
-      <!-- <p>{{ works['-LFFA0OCQkwrgPklDLFl'].date }}</p> -->
       <div class="works-menubar">
         <md-button class="md-raised" @click="filterAll()">tous les projets</md-button>
         <md-button class="md-raised" @click="filterDesign()">design de rue</md-button>
@@ -23,12 +12,12 @@
       </div>
       <ul class="works md-layout md-gutter">
         <li v-for="(work, index) in orderedWorks" :key="index" class="work md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
-          <!-- <nuxt-link v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
+          <nuxt-link v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
             {{ work.label }}
-          </nuxt-link> -->
-          <div v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
+          </nuxt-link>
+          <!-- <div v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
             {{ work.label }}
-          </div>
+          </div> -->
           <div v-if="work.type == 'design'" class="work-label work-type-design" :to="'works/' + index">
             {{ work.label }}
           </div>
@@ -49,7 +38,6 @@
 <script>
 import axios from '~/plugins/axios'
 import _ from 'lodash'
-import Vuex from 'vuex'
 import store from '~/store'
 
 // import Work from '~/components/work.vue'
@@ -58,7 +46,6 @@ export default {
   // components: {
   //   Work
   // },
-  // store,
   name: 'works',
   // async asyncData() {
   //   console.log('init asyncData')
@@ -69,9 +56,6 @@ export default {
   data () {
     return {
       counter: this.$store.state.counter,
-      // works: this.$store.state.works,
-      // work1: this.$store.state.works['-LFFA0OCQkwrgPklDLFl'].date,
-      // works: [],
       onlyDesign: false,
       onlyInsitu: false,
       onlyAutre: false,
@@ -85,7 +69,7 @@ export default {
   },
   computed: {
     works() {
-      return this.$store.state.works
+      return this.$store.getters.works
     },
     orderedWorks() {
       console.log('ordered works : ' + this.works)
@@ -125,6 +109,9 @@ export default {
     //   this.active = !this.active;   
     // }
   },
+  created() {
+    this.$store.dispatch('nuxtServerInit')
+  }
   // created() {
   //       axios.get('https://book-73f3b.firebaseio.com/data.json')
   //       .then(response => {
