@@ -1,17 +1,21 @@
 <template>
   <section class="container">
-    <h1 class="title part">
-      work
-    </h1>
-    <h2 class="info">
-      {{ work.label }}
-    </h2>
-    <!-- <ul>
-      <li v-for="(index) in this.img" :key="index">
-        <img :src="img[index]" alt="">
-      </li>
-    </ul> -->
-    <nuxt-link class="button" to="/works">
+    <div class="work-container">
+      <div class="work">
+        <h1 class="title part">
+          {{ works[id].label }}
+        </h1>
+
+        <div class="work-date-summary">{{ works[id].date }} / {{ works[id].summary }}</div>
+        <img class="work-picture" :src=" works[id].picture "/>
+        <div class="work-text">{{ works[id].text }}</div>
+        <div class="work-description">{{ works[id].description }}</div>
+
+        <p>{{ id }}</p>
+
+      </div>
+    </div>
+    <nuxt-link tag="md-button" class="md-raised" to="/works">
       Works
     </nuxt-link>
   </section>
@@ -19,63 +23,60 @@
 
 <script>
 import axios from '~/plugins/axios'
+import _ from 'lodash'
+import store from '~/store'
 
 export default {
-  name: 'id',
-  // asyncData ({ $axios, params }) {
-  //   const {data: {work}} = await $axios.get(`https://book-73f3b.firebaseio.com/data/${params.work}`);
-  //   return work;
-  // },
-
-  // asyncData ({ params, error }) {
-  //   return axios.get('https://book-73f3b.firebaseio.com/data/' + params.id)
-  //     .then((res) => {
-  //       return { work: res.data.data }
-  //     })
-  //     .catch((e) => {
-  //       error({ statusCode: 404, message: 'Work not found' })
-  //     })
-  // },
-
-  // async asyncData({$axios, params}) {
-  //   const {data: {match}} = await $axios.get(`https://www.rolandgarros.com/api/en-us/matches/${params.match}`);
-  //   return match;
-  // },
-
+  name: 'work',
   data () {
     return {
-      work: []
+      id: this.$route.params.id
     }
   },
   head () {
-    console.log('works : '+ this.works[1].label)
     return {
-      // title: `Work: ${this.work.label}`
+      title: 'Work'
     }
   },
-  // created() {
-  //       axios.get('https://book-73f3b.firebaseio.com/data.json' + params.id)
-  //       .then(response => {
-  //         this.work = response.data;
-  //       })
-  // }
+  computed: {
+    works() {
+      console.log('init works in Work_id')
+      return this.$store.getters.works
+    }
+  }
 }
 </script>
 
-<style scoped>
-.part
-{
-  margin-top: 30px;
+<style lang="scss" scoped>
+@import "~vue-material/src/components/MdAnimation/variables";
+@import "~vue-material/src/theme/engine";
+
+@import "~/assets/css/main.scss";
+
+.work-container {
+  margin: auto;
+  width: 70%;
 }
-.info
-{
+.work {
+  margin: 0 0 5em;
+  text-align: left;
+}
+.work-date-summary {
+  font-weight: 700;
+  margin: 1em 0;
+}
+.work-description {
+  margin: 3em 0 0;
+}
+.work-label {
   font-weight: 300;
-  color: #9aabb1;
-  margin: 0;
-  margin-top: 10px;
+  font-size: 1.5em;
 }
-.button
-{
-  margin-top: 30px;
+.work-picture {
+  width: 100%;
+}
+.work-text {
+  margin: 1em 0;
+  font-size: 1.2em;
 }
 </style>

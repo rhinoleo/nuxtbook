@@ -3,6 +3,7 @@
     <h1 class="title part">
       travaux
     </h1>
+    <!-- <h3>id : {{ id }}</h3> -->
     <div class="works-container">
       <div class="works-menubar">
         <md-button class="md-raised" @click="filterAll()">tous les projets</md-button>
@@ -11,25 +12,30 @@
         <md-button class="md-raised" @click="filterAutre()">autres pratiques</md-button>
       </div>
       <ul class="works md-layout md-gutter">
-        <li v-for="(work, index) in orderedWorks" :key="index" class="work md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
-          <nuxt-link v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
+        <nuxt-link
+          tag="li"
+          :to="'works/' + index"
+          v-for="(work, index) in works"
+          :key="index"
+          class="work md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
+          <!-- <nuxt-link v-if="work.type == 'autre'" class="work-label work-type-autre">
             {{ work.label }}
-          </nuxt-link>
-          <!-- <div v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
+          </nuxt-link> -->
+          <h2 v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
             {{ work.label }}
-          </div> -->
-          <div v-if="work.type == 'design'" class="work-label work-type-design" :to="'works/' + index">
+          </h2>
+          <h2 v-if="work.type == 'design'" class="work-label work-type-design" :to="'works/' + index">
             {{ work.label }}
-          </div>
-          <div v-if="work.type == 'insitu'" class="work-label work-type-insitu" :to="'works/' + index">
+          </h2>
+          <h2 v-if="work.type == 'insitu'" class="work-label work-type-insitu" :to="'works/' + index">
             {{ work.label }}
-          </div>
+          </h2>
           <div class="work-date">{{ work.date }}</div>
           <div class="work-summary">{{ work.summary }}</div>
           <div class="work-picture" :style="{ backgroundImage: 'url(' + work.picture + ')' }"></div>
           <div class="work-text">{{ work.text }}</div>
           <div class="work-description">{{ work.description }}</div>
-        </li>
+        </nuxt-link>
       </ul>
     </div>
   </section>
@@ -59,7 +65,9 @@ export default {
       onlyDesign: false,
       onlyInsitu: false,
       onlyAutre: false,
-      active: false
+      active: false,
+
+      // id: this.$route.params.id
     }
   },
   head () {
@@ -111,6 +119,7 @@ export default {
   },
   created() {
     this.$store.dispatch('nuxtServerInit')
+    console.log('rendu côté client : ' + process.client)
   }
   // created() {
   //       axios.get('https://book-73f3b.firebaseio.com/data.json')
@@ -159,11 +168,13 @@ export default {
 .work {
   margin: 0 0 5em;
   text-align: left;
+  cursor: pointer;
 }
 .work-date {
   font-weight: 700;
   font-size: 0.7em;
   margin: 1em 0 0;
+  line-height: 0.5em;
 }
 .work-description {
   font-size: 0.7em;
@@ -174,6 +185,7 @@ export default {
 .work-label {
   font-weight: 300;
   font-size: 1.5em;
+  margin: 0;
 }
 .work-picture {
   height: 15em;
@@ -183,7 +195,7 @@ export default {
 .work-summary {
   font-weight: 700;
   font-size: 0.7em;
-  margin: 0 0 1em;
+  margin: 0 0 0.5em;
   white-space: nowrap; 
   overflow: hidden;
   text-overflow: ellipsis;

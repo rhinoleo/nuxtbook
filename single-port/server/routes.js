@@ -69,6 +69,19 @@ export default () => {
       }
     })
 
+    // Get the work by name.
+    router.get('/works/:id/name', (req, res, next) => {
+      const id = parseInt(req.params.id)
+      if (id >= 0 && id < works.length) {
+        res.body = works[id].label
+        next()
+      } else {
+        var err = new Error('Work Not Found')
+        err.status = 400
+        next(err)
+      }
+    })
+
   // Handle routes not found.
   // https://stackoverflow.com/questions/38681318/express-4-middleware-when-route-is-not-found-finalhandler-not-called-how-to-c
   router.use(function(req, res, next) {
