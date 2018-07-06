@@ -6,36 +6,71 @@
     <!-- <h3>id : {{ id }}</h3> -->
     <div class="works-container">
       <div class="works-menubar">
+        <button @click="testRequest($event)">test</button>
         <md-button class="md-raised" @click="filterAll()">tous les projets</md-button>
         <md-button class="md-raised" @click="filterDesign()">design de rue</md-button>
         <md-button class="md-raised" @click="filterInsitu()">interventions in situ</md-button>
         <md-button class="md-raised" @click="filterAutre()">autres pratiques</md-button>
       </div>
       <ul class="works md-layout md-gutter">
-        <nuxt-link
+        
+        <!-- OLD -->
+        <!-- <nuxt-link
           tag="li"
-          :to="'works/' + index"
+          :to="'works/' + index + '/' + [index].name"
           v-for="(work, index) in works"
           :key="index"
+          class="work md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100"> -->
+
+        <li
+          :to="'works/' + index"
+          v-for="(work, index) in orderedWorks"
+          :key="index"
+          @mouseover="mouseOver()" :class="{ 'md-elevation-1': active}"
           class="work md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100">
-          <!-- <nuxt-link v-if="work.type == 'autre'" class="work-label work-type-autre">
-            {{ work.label }}
+        
+          <work
+            :key="work.id"
+            :work="work">
+          </work>
+
+        </li>
+
+        <!-- <nuxt-link
+          tag="li"
+          :to="'works/' + index"
+          v-for="(work, index) in orderedWorks"
+          :key="index"
+          :name="name"
+          :id="id"
+          @filterAll="filterAll"
+          @filterDesign="filterDesign"
+          @filterInsitu="filterInsitu"
+          @filterAutre="filterAutre"
+          class="work md-layout-item md-medium-size-33 md-small-size-50 md-xsmall-size-100"> -->
+          
+          <!-- OLD -->
+          <!-- <nuxt-link v-if="work.type == 'autre'" class="work-name work-type-autre">
+            {{ work.name }}
           </nuxt-link> -->
-          <h2 v-if="work.type == 'autre'" class="work-label work-type-autre" :to="'works/' + index">
-            {{ work.label }}
+
+          <!-- <h2 v-if="work.type == 'autre'" class="work-name work-type-autre" :to="'works/' + index">
+            {{ work.name }}
           </h2>
-          <h2 v-if="work.type == 'design'" class="work-label work-type-design" :to="'works/' + index">
-            {{ work.label }}
+          <h2 v-if="work.type == 'design'" class="work-name work-type-design" :to="'works/' + index">
+            {{ work.name }}
           </h2>
-          <h2 v-if="work.type == 'insitu'" class="work-label work-type-insitu" :to="'works/' + index">
-            {{ work.label }}
+          <h2 v-if="work.type == 'insitu'" class="work-name work-type-insitu" :to="'works/' + index">
+            {{ work.name }}
           </h2>
-          <div class="work-date">{{ work.date }}</div>
+          <div v-if="work.authors" class="work-date-float">{{ work.date }}</div>
+          <div v-else class="work-date">{{ work.date }}</div>
+          <div v-if="work.authors" class="work-authors">| avec {{ work.authors }}</div>
           <div class="work-summary">{{ work.summary }}</div>
           <div class="work-picture" :style="{ backgroundImage: 'url(' + work.picture + ')' }"></div>
-          <div class="work-text">{{ work.text }}</div>
+          <div @click="testRequest($event)" class="work-text">{{ work.text }}</div>
           <div class="work-description">{{ work.description }}</div>
-        </nuxt-link>
+        </nuxt-link> -->
       </ul>
     </div>
   </section>
@@ -46,12 +81,12 @@ import axios from '~/plugins/axios'
 import _ from 'lodash'
 import store from '~/store'
 
-// import Work from '~/components/work.vue'
+import Work from '~/components/work.vue'
 
 export default {
-  // components: {
-  //   Work
-  // },
+  components: {
+    Work
+  },
   name: 'works',
   // async asyncData() {
   //   console.log('init asyncData')
@@ -66,6 +101,8 @@ export default {
       onlyInsitu: false,
       onlyAutre: false,
       active: false,
+      work: {},
+      name: 'blah'
 
       // id: this.$route.params.id
     }
@@ -88,7 +125,7 @@ export default {
       } else if(this.onlyAutre) {
         return _.filter(this.works, { 'type': 'autre' })
       } else {
-        return _.orderBy(this.works, ['date','label'], ['desc', 'asc'])
+        return _.orderBy(this.works, ['date','name'], ['desc', 'asc'])
       }
     },
   },
@@ -113,9 +150,19 @@ export default {
       this.onlyInsitu = false
       this.onlyAutre = false
     },
-    // mouseOver: function(){
-    //   this.active = !this.active;   
-    // }
+    testRequest(event) {
+      // let works = this.works
+      console.log('nom de la page : ' + this.$options.name)
+      // console.log('nom du projet : ' + event.target.tagName)
+      console.log('counter init : ' + this.counter + ' !')
+      // `event` est l'évènement natif du DOM
+      if (event) {
+        console.log('event : ' + $(event.target).text)
+      }
+    },
+    mouseOver: function(){
+      this.active = !this.active;   
+    }
   },
   created() {
     this.$store.dispatch('nuxtServerInit')
@@ -169,50 +216,6 @@ export default {
   margin: 0 0 5em;
   text-align: left;
   cursor: pointer;
-}
-.work-date {
-  font-weight: 700;
-  font-size: 0.7em;
-  margin: 1em 0 0;
-  line-height: 0.5em;
-}
-.work-description {
-  font-size: 0.7em;
-  white-space: nowrap; 
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.work-label {
-  font-weight: 300;
-  font-size: 1.5em;
-  margin: 0;
-}
-.work-picture {
-  height: 15em;
-  background: no-repeat center;
-  background-size: cover;
-}
-.work-summary {
-  font-weight: 700;
-  font-size: 0.7em;
-  margin: 0 0 0.5em;
-  white-space: nowrap; 
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.work-text {
-  @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 3, $bgColor: white);
-  margin: 1em 0;
-  height:10em;
-}
-.work-type-autre {
-  color: #CC0000;
-}
-.work-type-design {
-  color: #FF9900;
-}
-.work-type-insitu {
-  color: #999900;
 }
 
 </style>

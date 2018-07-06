@@ -1,5 +1,4 @@
 <template>
-  <contact>
     <section class="container">
         <h1 class="title part">
         contact
@@ -11,7 +10,6 @@
             <a href="https://fr.linkedin.com/in/renauddenier" target="_blank">Linkedin</a>
         </p>
     </section>
-  </contact>
 </template>
 
 <script>
@@ -21,5 +19,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .container {
+    padding: 0;
+  }
+
+  .part {
+    margin: 30px 0 0;
+  }
+
+  .bio {
+    width: 80%;
+    margin: auto;
+  }
 
 </style>

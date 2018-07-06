@@ -73,7 +73,7 @@ export default () => {
     router.get('/works/:id/name', (req, res, next) => {
       const id = parseInt(req.params.id)
       if (id >= 0 && id < works.length) {
-        res.body = works[id].label
+        res.body = works[id].name
         next()
       } else {
         var err = new Error('Work Not Found')

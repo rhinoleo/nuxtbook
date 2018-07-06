@@ -13,12 +13,20 @@
           <label>autre</label>
       </div>
       <div class="form-group">
-          <label>titre</label><br>
-          <input type="text"  v-model="work.label">
+          <label>nom du projet</label><br>
+          <input type="text"  v-model="work.name">
+      </div>
+      <div class="form-group">
+          <label>autres auteurs</label><br>
+          <input type="text"  v-model="work.authors">
       </div>
       <div class="form-group">
           <label>accroche</label><br>
           <input type="text"  v-model="work.summary">
+      </div>
+      <div class="form-group">
+          <label>texteintro</label><br>
+          <textarea rows=5 cols=40 v-model="work.textintro"></textarea>
       </div>
       <div class="form-group">
           <label>texte</label><br>
@@ -44,7 +52,7 @@
     <hr>
     <button class="btn btn-primary" @click="getData">Get Data</button>
     <ul class="list-group">
-      <li class="list-group-item" v-for="(work, id) in works" :key="id">{{ work.label }} - {{ work.abstract }}</li>
+      <li class="list-group-item" v-for="(work, id) in works" :key="id">{{ work.name }} - {{ work.abstract }}</li>
     </ul> -->
   </section>
 </template>
@@ -60,9 +68,11 @@ export default {
   data () {
     return {
       work: {
-          label:'',
+          name:'',
           type:'',
+          authors: '',
           summary:'',
+          textintro: '',
           text:'',
           date:'',
           description:'',
